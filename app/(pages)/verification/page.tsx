@@ -154,7 +154,7 @@ export default function VerificationPage() {
         {/* Documents List */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {mockDocuments.map((doc) => {
-            const status = statusVariants[doc.status];
+            const status = statusVariants[doc.status] || { variant: 'info' as const, label: doc.status };
             const isExpanded = expandedDoc === doc.id;
 
             return (
