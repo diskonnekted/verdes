@@ -8,13 +8,12 @@ import Button from '@/components/Button';
 import { User, Shield, Bell, Database, Key } from 'lucide-react';
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState('settings');
   const [settingsTab, setSettingsTab] = useState('profile');
 
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <main className="max-w-7xl mx-auto p-6">
         <div className="mb-6">

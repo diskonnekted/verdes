@@ -1,22 +1,33 @@
 'use client';
 
-import { useState } from 'react';
-
-interface NavigationProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-}
+import { usePathname, useRouter } from 'next/navigation';
 
 const navItems = [
-  { id: 'dashboard', label: 'Dashboard' },
-  { id: 'documents', label: 'Dokumen' },
-  { id: 'verification', label: 'Verifikasi' },
-  { id: 'analysis', label: 'Analisis' },
-  { id: 'reports', label: 'Laporan' },
-  { id: 'settings', label: 'Pengaturan' },
+  { id: 'dashboard', label: 'Dashboard', href: '/dashboard' },
+  { id: 'documents', label: 'Dokumen', href: '/documents' },
+  { id: 'verification', label: 'Verifikasi', href: '/verification' },
+  { id: 'analysis', label: 'Analisis', href: '/analysis' },
+  { id: 'reports', label: 'Laporan', href: '/reports' },
+  { id: 'settings', label: 'Pengaturan', href: '/settings' },
 ];
 
-export default function Navigation({ activeTab, onTabChange }: NavigationProps) {
+export default function Navigation() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Determine active tab from current pathname
+  const getActiveTab = () => {
+    const path = pathname.replace('/', '');
+    if (!path || path === '') return 'dashboard';
+    return path;
+  };
+
+  const activeTab = getActiveTab();
+
+  const handleNav = (href: string) => {
+    router.push(href);
+  };
+
   return (
     <div className="nav" style={{
       display: 'flex',
@@ -31,7 +42,7 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
       {navItems.map((item) => (
         <button
           key={item.id}
-          onClick={() => onTabChange(item.id)}
+          onClick={() => handleNav(item.href)}
           style={{
             padding: '8px 16px',
             border: '1px solid #334155',

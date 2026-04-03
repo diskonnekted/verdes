@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import StatCard from '@/components/StatCard';
@@ -26,8 +25,6 @@ const formatCurrency = (value: number) => {
 };
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState('dashboard');
-
   const columns = [
     { key: 'documentNumber', label: 'No. Dokumen' },
     { key: 'title', label: 'Judul' },
@@ -74,7 +71,7 @@ export default function DashboardPage() {
       background: '#0f172a',
     }}>
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <div className="container" style={{
         maxWidth: '1200px',

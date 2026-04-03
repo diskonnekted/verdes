@@ -8,7 +8,6 @@ import StatCard from '@/components/StatCard';
 import { TrendingUp, BarChart3 } from 'lucide-react';
 
 export default function AnalysisPage() {
-  const [activeTab, setActiveTab] = useState('analysis');
   const [selectedPeriod, setSelectedPeriod] = useState('2026');
 
   const riskDocuments = [
@@ -105,7 +104,7 @@ export default function AnalysisPage() {
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <main className="max-w-7xl mx-auto p-6">
         {/* Header */}

@@ -5,10 +5,10 @@ import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { 
-  Upload, 
-  FileText, 
-  CheckCircle, 
+import {
+  Upload,
+  FileText,
+  CheckCircle,
   AlertCircle,
   X,
   Eye,
@@ -24,7 +24,6 @@ interface UploadedFile {
 }
 
 export default function DocumentsPage() {
-  const [activeTab, setActiveTab] = useState('documents');
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -96,7 +95,7 @@ export default function DocumentsPage() {
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <main className="max-w-7xl mx-auto p-6">
         {/* Header Actions */}

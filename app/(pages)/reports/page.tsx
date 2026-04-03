@@ -8,7 +8,6 @@ import Button from '@/components/Button';
 import { Printer, Download, FileText, Eye } from 'lucide-react';
 
 export default function ReportsPage() {
-  const [activeTab, setActiveTab] = useState('reports');
   const [selectedReport, setSelectedReport] = useState<number | null>(null);
   const [reportType, setReportType] = useState('verification');
 
@@ -27,7 +26,7 @@ export default function ReportsPage() {
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <main className="max-w-7xl mx-auto p-6">
         {/* Header */}

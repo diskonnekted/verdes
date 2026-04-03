@@ -6,10 +6,10 @@ import Navigation from '@/components/Navigation';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
-import { 
-  Search, 
-  CheckCircle, 
-  XCircle, 
+import {
+  Search,
+  CheckCircle,
+  XCircle,
   AlertTriangle,
   FileCheck,
   Eye,
@@ -18,7 +18,6 @@ import {
 } from 'lucide-react';
 
 export default function VerificationPage() {
-  const [activeTab, setActiveTab] = useState('verification');
   const [expandedDoc, setExpandedDoc] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -82,7 +81,7 @@ export default function VerificationPage() {
   return (
     <div className="min-h-screen bg-[#0f172a]">
       <Header />
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation />
       
       <main className="max-w-7xl mx-auto p-6">
         {/* Header */}
@@ -128,10 +127,10 @@ export default function VerificationPage() {
         <div className="space-y-4">
           {mockDocuments.map((doc) => {
             const statusVariants: any = {
-              APPROVED: { variant: 'success' as const, label: 'APPROVED' },
+              APPROVED: { variant: 'ok' as const, label: 'APPROVED' },
               IN_REVIEW: { variant: 'info' as const, label: 'IN REVIEW' },
-              PENDING: { variant: 'warning' as const, label: 'PENDING' },
-              REJECTED: { variant: 'error' as const, label: 'REJECTED' },
+              PENDING: { variant: 'warn' as const, label: 'PENDING' },
+              REJECTED: { variant: 'err' as const, label: 'REJECTED' },
             };
             const status = statusVariants[doc.status];
             const isExpanded = expandedDoc === doc.id;
