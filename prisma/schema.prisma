@@ -1,0 +1,114 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  password      String
+  role          Role     @default(VERIFIER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  documents     Document[] @relation("DocumentCreator")
+  verifications Verification[] @relation("VerificationReviewer")
+}
+
+enum Role {
+  ADMIN
+  VERIFIER
+  AUDITOR
+  KEPALA_DESA
+}
+
+model Document {
+  id              String   @id @default(cuid())
+  documentNumber  String   @unique
+  title           String
+  description     String?
+  type            DocumentType
+  amount          Float
+  date            DateTime
+  status          DocumentStatus @default(PENDING)
+  riskScore       Float?
+  riskLevel       RiskLevel?
+  notes           String?
+  filePath        String?
+  createdBy       String
+  creator         User     @relation("DocumentCreator", fields: [createdBy], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  verifications   Verification[]
+  checklistItems  ChecklistItem[]
+
+  @@index([type])
+  @@index([status])
+  @@index([createdBy])
+}
+
+enum DocumentType {
+  PENGADAAN
+  PEMBELIAN
+  PEMBANGUNAN
+  PERBAIKAN
+  OPERASIONAL
+  HIBAH
+  BANTUAN_SOSIAL
+}
+
+enum DocumentStatus {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  REVISE
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Verification {
+  id              String   @id @default(cuid())
+  documentId      String
+  document        Document @relation(fields: [documentId], references: [id])
+  reviewerId      String
+  reviewer        User     @relation("VerificationReviewer", fields: [reviewerId], references: [id])
+  status          VerificationStatus
+  comments        String?
+  findings        String?
+  reviewedAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([documentId])
+  @@index([reviewerId])
+}
+
+enum VerificationStatus {
+  APPROVED
+  REJECTED
+  NEEDS_REVISION
+}
+
+model ChecklistItem {
+  id              String   @id @default(cuid())
+  documentId      String
+  document        Document @relation(fields: [documentId], references: [id])
+  label           String
+  isChecked       Boolean  @default(false)
+  isRequired      Boolean  @default(true)
+  category        String?
+  createdAt       DateTime @default(now())
+
+  @@index([documentId])
+}
