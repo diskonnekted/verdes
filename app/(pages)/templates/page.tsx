@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import Card from '@/components/Card';
 import { FileText, Plus, Trash2, Eye, Download } from 'lucide-react';
 
 export default function TemplateBuilderPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('templates');
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
@@ -146,7 +148,7 @@ export default function TemplateBuilderPage() {
 
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
-                  onClick={() => window.location.href = '/template-preview?id=' + template.id}
+                  onClick={() => router.push('/template-preview?id=' + template.id)}
                   style={{
                     flex: 1,
                     padding: '8px 12px',
@@ -167,7 +169,7 @@ export default function TemplateBuilderPage() {
                   Preview
                 </button>
                 <button
-                  onClick={() => window.location.href = '/template-preview?id=' + template.id}
+                  onClick={() => router.push('/template-preview?id=' + template.id)}
                   style={{
                     flex: 1,
                     padding: '8px 12px',
