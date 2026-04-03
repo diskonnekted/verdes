@@ -146,7 +146,7 @@ export default function TemplateBuilderPage() {
 
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
-                  onClick={() => setSelectedTemplate(template)}
+                  onClick={() => window.location.href = '/template-preview?id=' + template.id}
                   style={{
                     flex: 1,
                     padding: '8px 12px',
@@ -167,6 +167,7 @@ export default function TemplateBuilderPage() {
                   Preview
                 </button>
                 <button
+                  onClick={() => window.location.href = '/template-editor?id=' + template.id}
                   style={{
                     flex: 1,
                     padding: '8px 12px',
@@ -184,7 +185,7 @@ export default function TemplateBuilderPage() {
                   }}
                 >
                   <Download style={{ width: '14px', height: '14px' }} />
-                  Export PDF
+                  Isi & Export
                 </button>
                 <button
                   style={{
