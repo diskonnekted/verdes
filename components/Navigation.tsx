@@ -7,6 +7,7 @@ const navItems = [
   { id: 'village', label: 'Profil Desa', href: '/village' },
   { id: 'documents', label: 'Dokumen', href: '/documents' },
   { id: 'verification', label: 'Verifikasi', href: '/verification' },
+  { id: 'templates', label: 'Template', href: '/templates' },
   { id: 'analysis', label: 'Analisis', href: '/analysis' },
   { id: 'reports', label: 'Laporan', href: '/reports' },
   { id: 'settings', label: 'Pengaturan', href: '/settings' },
