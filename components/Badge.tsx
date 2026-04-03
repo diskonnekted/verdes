@@ -5,15 +5,17 @@ interface BadgeProps {
   variant?: 'ok' | 'warn' | 'err' | 'info';
 }
 
-export default function Badge({ children, variant = 'info' }: BadgeProps) {
-  const variants = {
+export default function Badge({ children, variant }: BadgeProps) {
+  const safeVariant = variant || 'info';
+  
+  const variantStyles = {
     ok: { background: '#064e3b', color: '#10b981' },
     warn: { background: '#451a03', color: '#f59e0b' },
     err: { background: '#4c0519', color: '#f87171' },
     info: { background: '#1e3a5f', color: '#60a5fa' },
   };
 
-  const style = variants[variant] || variants.info;
+  const style = variantStyles[safeVariant];
 
   return (
     <span className="badge" style={{
@@ -21,8 +23,8 @@ export default function Badge({ children, variant = 'info' }: BadgeProps) {
       borderRadius: '20px',
       fontSize: '0.7rem',
       fontWeight: 600,
-      background: style.background,
-      color: style.color,
+      background: style?.background ?? '#1e3a5f',
+      color: style?.color ?? '#60a5fa',
     }}>
       {children}
     </span>
