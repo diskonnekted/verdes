@@ -167,7 +167,7 @@ export default function TemplateBuilderPage() {
                   Preview
                 </button>
                 <button
-                  onClick={() => window.location.href = '/template-editor?id=' + template.id}
+                  onClick={() => window.location.href = '/template-preview?id=' + template.id}
                   style={{
                     flex: 1,
                     padding: '8px 12px',
