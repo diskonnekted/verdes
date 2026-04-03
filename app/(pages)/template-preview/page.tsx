@@ -227,10 +227,10 @@ export default function TemplatePreviewPage() {
           {/* Form Input - No Print */}
           <div className="no-print">
             <Card style={{ maxHeight: '700px', overflowY: 'auto' }}>
-            <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#10b981', marginBottom: '16px', marginTop: 0 }}>
-              <FileText style={{ width: '16px', height: '16px', display: 'inline', marginRight: '8px' }} />
-              Input Data Dokumen
-            </h3>
+              <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#10b981', marginBottom: '16px', marginTop: 0 }}>
+                <FileText style={{ width: '16px', height: '16px', display: 'inline', marginRight: '8px' }} />
+                Input Data Dokumen
+              </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {/* Identitas Desa */}

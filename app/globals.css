@@ -17,9 +17,14 @@ body {
     color: #000 !important;
   }
   
+  /* Hide all UI elements */
   .header,
   .nav,
-  .no-print {
+  .no-print,
+  button,
+  input,
+  select,
+  textarea {
     display: none !important;
   }
   
@@ -29,6 +34,7 @@ body {
     margin: 0 !important;
   }
   
+  /* Show only document preview */
   .print-content {
     display: block !important;
   }
@@ -39,14 +45,7 @@ body {
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-  }
-  
-  /* Hide all buttons and interactive elements */
-  button,
-  input,
-  select,
-  textarea {
-    display: none !important;
+    background: #fff !important;
   }
   
   /* Ensure document preview takes full page */
