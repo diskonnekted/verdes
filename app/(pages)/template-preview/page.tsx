@@ -223,9 +223,10 @@ export default function TemplatePreviewPage() {
         </div>
 
         {/* Content */}
-        <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '20px' }}>
-          {/* Form Input */}
-          <Card style={{ maxHeight: '700px', overflowY: 'auto' }}>
+        <div className="print-content" style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '20px' }}>
+          {/* Form Input - No Print */}
+          <div className="no-print">
+            <Card style={{ maxHeight: '700px', overflowY: 'auto' }}>
             <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#10b981', marginBottom: '16px', marginTop: 0 }}>
               <FileText style={{ width: '16px', height: '16px', display: 'inline', marginRight: '8px' }} />
               Input Data Dokumen
@@ -485,10 +486,11 @@ export default function TemplatePreviewPage() {
                 ))}
               </div>
             </div>
-          </Card>
+            </Card>
+          </div>
 
           {/* PDF Preview */}
-          <div style={{ height: '700px', overflow: 'auto', borderRadius: '12px', border: '1px solid #334155' }}>
+          <div className="print-preview-only pdf-document" style={{ height: '700px', overflow: 'auto', borderRadius: '12px', border: '1px solid #334155' }}>
             <PDFPreview data={formData} />
           </div>
         </div>

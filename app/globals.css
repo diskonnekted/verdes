@@ -18,12 +18,41 @@ body {
   }
   
   .header,
-  .nav {
+  .nav,
+  .no-print {
     display: none !important;
   }
   
   .container {
     padding: 0 !important;
     max-width: 100% !important;
+    margin: 0 !important;
+  }
+  
+  .print-content {
+    display: block !important;
+  }
+  
+  .print-preview-only {
+    height: auto !important;
+    overflow: visible !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  
+  /* Hide all buttons and interactive elements */
+  button,
+  input,
+  select,
+  textarea {
+    display: none !important;
+  }
+  
+  /* Ensure document preview takes full page */
+  .pdf-document {
+    display: block !important;
+    width: 100% !important;
+    padding: 20mm !important;
   }
 }
