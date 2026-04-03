@@ -5,18 +5,8 @@ import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import StatCard from '@/components/StatCard';
 import Card from '@/components/Card';
-import Badge from '@/components/Button';
+import Badge from '@/components/Badge';
 import DataTable from '@/components/DataTable';
-import { 
-  FileText, 
-  CheckCircle, 
-  AlertTriangle, 
-  XCircle,
-  TrendingUp,
-  DollarSign,
-  Clock,
-  Shield
-} from 'lucide-react';
 
 // Dummy data
 const mockDocuments = [
@@ -27,12 +17,12 @@ const mockDocuments = [
   { id: 5, documentNumber: 'OPS/005/2026', title: 'Operasional Kantor Desa', type: 'OPERASIONAL', amount: 15000000, status: 'APPROVED', date: '2026-03-05', riskLevel: 'LOW' },
 ];
 
-const statusColors: any = {
-  APPROVED: 'success',
-  IN_REVIEW: 'info',
-  PENDING: 'warning',
-  REJECTED: 'error',
-  REVISE: 'warning',
+const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('id-ID', { 
+    style: 'currency', 
+    currency: 'IDR', 
+    minimumFractionDigits: 0 
+  }).format(value);
 };
 
 export default function DashboardPage() {
@@ -45,24 +35,22 @@ export default function DashboardPage() {
     { 
       key: 'amount', 
       label: 'Jumlah',
-      render: (value: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(value)
+      render: (value: number) => (
+        <span style={{ color: '#e2e8f0' }}>{formatCurrency(value)}</span>
+      )
     },
     { 
       key: 'status', 
       label: 'Status',
       render: (value: string) => {
         const variants: any = {
-          APPROVED: 'bg-[#064e3b] text-[#10b981]',
-          IN_REVIEW: 'bg-[#1e3a5f] text-[#60a5fa]',
-          PENDING: 'bg-[#451a03] text-[#f59e0b]',
-          REJECTED: 'bg-[#4c0519] text-[#f87171]',
-          REVISE: 'bg-[#451a03] text-[#f59e0b]',
+          APPROVED: 'ok',
+          IN_REVIEW: 'info',
+          PENDING: 'warn',
+          REJECTED: 'err',
+          REVISE: 'warn',
         };
-        return (
-          <span className={`px-2 py-1 rounded text-xs font-semibold ${variants[value]}`}>
-            {value}
-          </span>
-        );
+        return <Badge variant={variants[value]}>{value}</Badge>;
       }
     },
     { 
@@ -70,74 +58,52 @@ export default function DashboardPage() {
       label: 'Risiko',
       render: (value: string) => {
         const variants: any = {
-          LOW: 'bg-[#064e3b] text-[#10b981]',
-          MEDIUM: 'bg-[#451a03] text-[#f59e0b]',
-          HIGH: 'bg-[#4c0519] text-[#f87171]',
-          CRITICAL: 'bg-[#4c0519] text-[#f87171]',
+          LOW: 'ok',
+          MEDIUM: 'warn',
+          HIGH: 'err',
+          CRITICAL: 'err',
         };
-        return (
-          <span className={`px-2 py-1 rounded text-xs font-semibold ${variants[value]}`}>
-            {value}
-          </span>
-        );
+        return <Badge variant={variants[value]}>{value}</Badge>;
       }
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f172a]">
+    <div style={{
+      minHeight: '100vh',
+      background: '#0f172a',
+    }}>
       <Header />
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
       
-      <main className="max-w-7xl mx-auto p-6">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <StatCard 
-            label="Total Dokumen" 
-            value={156} 
-            icon={<FileText className="w-8 h-8" />} 
-            color="blue"
-          />
-          <StatCard 
-            label="Disetujui" 
-            value={89} 
-            icon={<CheckCircle className="w-8 h-8" />} 
-            color="green"
-          />
-          <StatCard 
-            label="Dalam Review" 
-            value={42} 
-            icon={<Clock className="w-8 h-8" />} 
-            color="yellow"
-          />
-          <StatCard 
-            label="Ditolak/Revisi" 
-            value={25} 
-            icon={<XCircle className="w-8 h-8" />} 
-            color="red"
-          />
+      <div className="container" style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '24px',
+      }}>
+        {/* Stats Grid - 4 columns */}
+        <div className="grid-3" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '16px',
+          marginBottom: '20px',
+        }}>
+          <StatCard label="Total Dokumen" value={156} color="#10b981" />
+          <StatCard label="Disetujui" value={89} color="#10b981" />
+          <StatCard label="Dalam Review" value={42} color="#f59e0b" />
+          <StatCard label="Ditolak/Revisi" value={25} color="#f87171" />
         </div>
 
-        {/* Additional Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <StatCard 
-            label="Total Nilai Dokumen" 
-            value="Rp 2.4M" 
-            icon={<DollarSign className="w-8 h-8" />} 
-            color="green"
-          />
-          <StatCard 
-            label="Risiko Tinggi" 
-            value={12} 
-            icon={<AlertTriangle className="w-8 h-8" />} 
-            color="yellow"
-          />
-          <StatCard 
-            label="Terverifikasi" 
-            value="87%" 
-            icon={<Shield className="w-8 h-8" />} 
-            color="blue"
-          />
+        {/* Additional Stats - 3 columns */}
+        <div className="grid-3" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '16px',
+          marginBottom: '20px',
+        }}>
+          <StatCard label="Total Nilai Dokumen" value="Rp 2.4M" color="#10b981" />
+          <StatCard label="Risiko Tinggi" value={12} color="#f59e0b" />
+          <StatCard label="Terverifikasi" value="87%" color="#60a5fa" />
         </div>
 
         {/* Recent Documents */}
@@ -145,36 +111,65 @@ export default function DashboardPage() {
           <DataTable columns={columns} data={mockDocuments} />
         </Card>
 
-        {/* Activity Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+        {/* Activity Summary - 2 columns */}
+        <div className="grid-2" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '16px',
+          marginTop: '16px',
+        }}>
           <Card title="Aktivitas Verifikasi">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-[#0f172a] rounded-lg">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 14px',
+                background: '#0f172a',
+                borderRadius: '8px',
+                border: '1px solid #334155',
+              }}>
                 <div>
-                  <p className="text-sm text-gray-300">Dokumen diverifikasi hari ini</p>
-                  <p className="text-xs text-gray-500">15 dokumen</p>
+                  <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>Dokumen diverifikasi hari ini</p>
+                  <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '2px 0 0' }}>15 dokumen</p>
                 </div>
-                <TrendingUp className="w-5 h-5 text-[#10b981]" />
+                <span style={{ fontSize: '1.2rem' }}>✓</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-[#0f172a] rounded-lg">
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 14px',
+                background: '#0f172a',
+                borderRadius: '8px',
+                border: '1px solid #334155',
+              }}>
                 <div>
-                  <p className="text-sm text-gray-300">Menunggu review</p>
-                  <p className="text-xs text-gray-500">8 dokumen</p>
+                  <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>Menunggu review</p>
+                  <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '2px 0 0' }}>8 dokumen</p>
                 </div>
-                <Clock className="w-5 h-5 text-[#f59e0b]" />
+                <span style={{ fontSize: '1.2rem' }}>⏰</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-[#0f172a] rounded-lg">
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 14px',
+                background: '#0f172a',
+                borderRadius: '8px',
+                border: '1px solid #334155',
+              }}>
                 <div>
-                  <p className="text-sm text-gray-300">Perlu tindak lanjut</p>
-                  <p className="text-xs text-gray-500">5 dokumen</p>
+                  <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>Perlu tindak lanjut</p>
+                  <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '2px 0 0' }}>5 dokumen</p>
                 </div>
-                <AlertTriangle className="w-5 h-5 text-[#f87171]" />
+                <span style={{ fontSize: '1.2rem' }}>⚠</span>
               </div>
             </div>
           </Card>
 
           <Card title="Distribusi Tipe Dokumen">
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {[
                 { type: 'PENGADAAN', count: 35, percent: 22 },
                 { type: 'PEMBELIAN', count: 48, percent: 31 },
@@ -182,15 +177,29 @@ export default function DashboardPage() {
                 { type: 'PERBAIKAN', count: 18, percent: 12 },
                 { type: 'OPERASIONAL', count: 13, percent: 8 },
               ].map((item) => (
-                <div key={item.type} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-300">{item.type}</span>
-                    <span className="text-gray-500">{item.count} ({item.percent}%)</span>
+                <div key={item.type}>
+                  <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    fontSize: '0.82rem',
+                    marginBottom: '4px',
+                  }}>
+                    <span style={{ color: '#94a3b8' }}>{item.type}</span>
+                    <span style={{ color: '#64748b' }}>{item.count} ({item.percent}%)</span>
                   </div>
-                  <div className="bg-[#334155] rounded-full h-2">
+                  <div style={{
+                    background: '#334155',
+                    borderRadius: '20px',
+                    height: '8px',
+                  }}>
                     <div 
-                      className="bg-gradient-to-r from-[#10b981] to-[#34d399] h-2 rounded-full transition-all duration-1000" 
-                      style={{ width: `${item.percent}%` }}
+                      style={{
+                        background: 'linear-gradient(90deg, #10b981, #34d399)',
+                        height: '8px',
+                        borderRadius: '20px',
+                        width: `${item.percent}%`,
+                        transition: 'width 1s',
+                      }}
                     />
                   </div>
                 </div>
@@ -198,7 +207,7 @@ export default function DashboardPage() {
             </div>
           </Card>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

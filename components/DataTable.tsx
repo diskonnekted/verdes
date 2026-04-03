@@ -4,6 +4,7 @@ interface DataTableProps {
   columns: Array<{
     key: string;
     label: string;
+    width?: string;
     render?: (value: any, row: any) => React.ReactNode;
   }>;
   data: any[];
@@ -12,14 +13,26 @@ interface DataTableProps {
 
 export default function DataTable({ columns, data, onRowClick }: DataTableProps) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <div style={{ overflowX: 'auto' }}>
+      <table style={{
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontSize: '0.82rem',
+      }}>
         <thead>
-          <tr className="bg-[#0f172a]">
+          <tr>
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="px-3 py-2.5 text-left text-[#60a5fa] font-semibold border-b-2 border-[#334155]"
+                style={{
+                  background: '#0f172a',
+                  padding: '10px 12px',
+                  textAlign: 'left',
+                  color: '#60a5fa',
+                  fontWeight: 600,
+                  borderBottom: '2px solid #334155',
+                  width: col.width,
+                }}
               >
                 {col.label}
               </th>
@@ -31,10 +44,20 @@ export default function DataTable({ columns, data, onRowClick }: DataTableProps)
             <tr
               key={idx}
               onClick={() => onRowClick?.(row)}
-              className="border-b border-[#1e293b] hover:bg-[#0f172a40] cursor-pointer"
+              style={{
+                cursor: onRowClick ? 'pointer' : 'default',
+              }}
             >
               {columns.map((col) => (
-                <td key={col.key} className="px-3 py-2.5 text-gray-300">
+                <td
+                  key={col.key}
+                  style={{
+                    padding: '9px 12px',
+                    borderBottom: '1px solid #1e293b',
+                    verticalAlign: 'top',
+                    color: '#e2e8f0',
+                  }}
+                >
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </td>
               ))}
@@ -43,7 +66,16 @@ export default function DataTable({ columns, data, onRowClick }: DataTableProps)
         </tbody>
       </table>
       {data.length === 0 && (
-        <div className="text-center py-8 text-gray-500 text-sm">
+        <div style={{
+          textAlign: 'center',
+          padding: '20px',
+          color: '#64748b',
+          fontSize: '0.82rem',
+          background: '#0f172a',
+          border: '1px dashed #334155',
+          borderRadius: '8px',
+          marginTop: '12px',
+        }}>
           Tidak ada data
         </div>
       )}

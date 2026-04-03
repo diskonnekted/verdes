@@ -2,19 +2,26 @@
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'success' | 'warning' | 'error' | 'info';
+  variant?: 'ok' | 'warn' | 'err' | 'info';
 }
 
 export default function Badge({ children, variant = 'info' }: BadgeProps) {
   const variants = {
-    success: 'bg-[#064e3b] text-[#10b981]',
-    warning: 'bg-[#451a03] text-[#f59e0b]',
-    error: 'bg-[#4c0519] text-[#f87171]',
-    info: 'bg-[#1e3a5f] text-[#60a5fa]',
+    ok: { background: '#064e3b', color: '#10b981' },
+    warn: { background: '#451a03', color: '#f59e0b' },
+    err: { background: '#4c0519', color: '#f87171' },
+    info: { background: '#1e3a5f', color: '#60a5fa' },
   };
 
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${variants[variant]}`}>
+    <span className="badge" style={{
+      padding: '3px 10px',
+      borderRadius: '20px',
+      fontSize: '0.7rem',
+      fontWeight: 600,
+      background: variants[variant].background,
+      color: variants[variant].color,
+    }}>
       {children}
     </span>
   );

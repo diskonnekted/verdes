@@ -10,13 +10,29 @@ export default function Header({
   subtitle = "Kabupaten Example" 
 }: HeaderProps) {
   return (
-    <header className="bg-gradient-to-r from-[#1e3a5f] to-[#0e4d3a] border-b-2 border-[#10b981] overflow-hidden">
-      <div className="flex items-center justify-center gap-4 p-4">
-        <div className="text-center flex-1">
-          <h1 className="text-xl font-bold text-[#10b981] m-0">{title}</h1>
-          <p className="text-gray-400 text-sm mt-1">{subtitle}</p>
-        </div>
+    <div className="header" style={{
+      background: 'linear-gradient(135deg, #1e3a5f, #0e4d3a)',
+      borderBottom: '2px solid #10b981',
+      overflow: 'hidden',
+      padding: '20px 24px',
+    }}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+      }}>
+        <h1 style={{
+          fontSize: '1.2rem',
+          color: '#10b981',
+          fontWeight: 700,
+          lineHeight: 1.3,
+          margin: 0,
+        }}>{title}</h1>
+        <p style={{
+          color: '#94a3b8',
+          fontSize: '0.85rem',
+          marginTop: '4px',
+        }}>{subtitle}</p>
       </div>
-    </header>
+    </div>
   );
 }

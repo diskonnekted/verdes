@@ -3,23 +3,28 @@
 interface StatCardProps {
   label: string;
   value: number | string;
-  icon: React.ReactNode;
-  color?: 'green' | 'blue' | 'yellow' | 'red';
+  color?: string;
 }
 
-export default function StatCard({ label, value, icon, color = 'green' }: StatCardProps) {
-  const colorClasses = {
-    green: 'text-[#10b981]',
-    blue: 'text-[#60a5fa]',
-    yellow: 'text-[#f59e0b]',
-    red: 'text-[#f87171]',
-  };
-
+export default function StatCard({ label, value, color = '#10b981' }: StatCardProps) {
   return (
-    <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-5 text-center">
-      <div className={`${colorClasses[color]} mb-2`}>{icon}</div>
-      <div className={`text-3xl font-bold ${colorClasses[color]}`}>{value}</div>
-      <div className="text-gray-400 text-sm mt-2">{label}</div>
+    <div className="stat-box" style={{
+      background: '#1e293b',
+      border: '1px solid #334155',
+      borderRadius: '12px',
+      padding: '20px',
+      textAlign: 'center',
+    }}>
+      <div style={{
+        fontSize: '2rem',
+        fontWeight: 700,
+        color: color,
+      }}>{value}</div>
+      <div style={{
+        color: '#94a3b8',
+        fontSize: '0.8rem',
+        marginTop: '4px',
+      }}>{label}</div>
     </div>
   );
 }

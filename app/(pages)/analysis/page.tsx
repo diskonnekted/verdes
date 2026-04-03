@@ -5,15 +5,7 @@ import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import Card from '@/components/Card';
 import StatCard from '@/components/StatCard';
-import { 
-  AlertTriangle, 
-  TrendingUp, 
-  Shield, 
-  ShieldAlert,
-  BarChart3,
-  PieChart,
-  Activity
-} from 'lucide-react';
+import { TrendingUp, BarChart3 } from 'lucide-react';
 
 export default function AnalysisPage() {
   const [activeTab, setActiveTab] = useState('analysis');
@@ -134,31 +126,16 @@ export default function AnalysisPage() {
         </div>
 
         {/* Risk Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <StatCard 
-            label="Risiko Rendah" 
-            value={89} 
-            icon={<Shield className="w-8 h-8" />} 
-            color="green"
-          />
-          <StatCard 
-            label="Risiko Sedang" 
-            value={42} 
-            icon={<Activity className="w-8 h-8" />} 
-            color="blue"
-          />
-          <StatCard 
-            label="Risiko Tinggi" 
-            value={18} 
-            icon={<AlertTriangle className="w-8 h-8" />} 
-            color="yellow"
-          />
-          <StatCard 
-            label="Risiko Kritis" 
-            value={7} 
-            icon={<ShieldAlert className="w-8 h-8" />} 
-            color="red"
-          />
+        <div className="grid-3" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '16px',
+          marginBottom: '20px',
+        }}>
+          <StatCard label="Risiko Rendah" value={89} color="#10b981" />
+          <StatCard label="Risiko Sedang" value={42} color="#60a5fa" />
+          <StatCard label="Risiko Tinggi" value={18} color="#f59e0b" />
+          <StatCard label="Risiko Kritis" value={7} color="#f87171" />
         </div>
 
         {/* Risk Distribution */}
