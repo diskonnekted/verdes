@@ -13,14 +13,16 @@ export default function Badge({ children, variant = 'info' }: BadgeProps) {
     info: { background: '#1e3a5f', color: '#60a5fa' },
   };
 
+  const style = variants[variant] || variants.info;
+
   return (
     <span className="badge" style={{
       padding: '3px 10px',
       borderRadius: '20px',
       fontSize: '0.7rem',
       fontWeight: 600,
-      background: variants[variant].background,
-      color: variants[variant].color,
+      background: style.background,
+      color: style.color,
     }}>
       {children}
     </span>

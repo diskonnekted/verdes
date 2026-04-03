@@ -93,6 +93,7 @@ export default function VerificationPage() {
     IN_REVIEW: { variant: 'info', label: 'IN REVIEW' },
     PENDING: { variant: 'warn', label: 'PENDING' },
     REJECTED: { variant: 'err', label: 'REJECTED' },
+    REVISE: { variant: 'warn', label: 'REVISE' },
   };
 
   // Shared input styles
