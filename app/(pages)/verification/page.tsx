@@ -1,13 +1,10 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import Badge from '@/components/Badge';
 import {
   Search,
   CheckCircle,
@@ -165,7 +162,18 @@ export default function VerificationPage() {
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                       <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#6b7280' }}>{doc.documentNumber}</span>
-                      <Badge variant={status.variant}>{status.label}</Badge>
+                      <span style={{
+                        padding: '3px 10px',
+                        borderRadius: '20px',
+                        fontSize: '0.7rem',
+                        fontWeight: 600,
+                        background: status.variant === 'ok' ? '#064e3b' : 
+                                   status.variant === 'warn' ? '#451a03' :
+                                   status.variant === 'err' ? '#4c0519' : '#1e3a5f',
+                        color: status.variant === 'ok' ? '#10b981' : 
+                              status.variant === 'warn' ? '#f59e0b' :
+                              status.variant === 'err' ? '#f87171' : '#60a5fa',
+                      }}>{status.label}</span>
                     </div>
                     <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '4px', marginTop: 0 }}>{doc.title}</h3>
                     <div style={{ display: 'flex', gap: '16px', fontSize: '0.875rem', color: '#9ca3af' }}>
