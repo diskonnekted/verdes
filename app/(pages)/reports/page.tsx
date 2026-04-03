@@ -23,90 +23,111 @@ export default function ReportsPage() {
     { id: 5, title: 'Laporan Bantuan Sosial', type: 'bantuan', date: '2026-03-01', documents: 32, status: 'Selesai' },
   ];
 
+  const containerStyle = { maxWidth: '1200px', margin: '0 auto', padding: '24px' };
+
+  const reportTypes = [
+    { id: 'verification', label: 'Laporan Verifikasi', icon: FileText },
+    { id: 'analysis', label: 'Laporan Analisis', icon: Eye },
+    { id: 'summary', label: 'Laporan Ringkasan', icon: Printer },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#0f172a]">
+    <div style={{ minHeight: '100vh', background: '#0f172a' }}>
       <Header />
       <Navigation />
-      
-      <main className="max-w-7xl mx-auto p-6">
+
+      <main style={containerStyle}>
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h2 className="text-xl font-bold text-[#10b981] m-0">Laporan & Output</h2>
-            <p className="text-sm text-gray-400 mt-1">Generate dan cetak laporan verifikasi</p>
-          </div>
+        <div style={{ marginBottom: '24px' }}>
+          <h2 style={{ color: '#10b981', fontSize: '1.2rem', fontWeight: 'bold', margin: 0 }}>Laporan & Output</h2>
+          <p style={{ color: '#9ca3af', fontSize: '0.875rem', marginTop: '4px', marginBottom: 0 }}>Generate dan cetak laporan verifikasi</p>
         </div>
 
         {/* Report Type Selection */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          {[
-            { id: 'verification', label: 'Laporan Verifikasi', icon: FileText },
-            { id: 'analysis', label: 'Laporan Analisis', icon: Eye },
-            { id: 'summary', label: 'Laporan Ringkasan', icon: Printer },
-          ].map((type) => (
-            <button
-              key={type.id}
-              onClick={() => setReportType(type.id)}
-              className={`p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-3 ${
-                reportType === type.id
-                  ? 'border-[#10b981] bg-[#052e16]'
-                  : 'border-[#334155] bg-[#0f172a] hover:border-[#10b981]'
-              }`}
-            >
-              <type.icon className="w-6 h-6 text-[#10b981]" />
-              <span className="text-sm font-semibold text-gray-200">{type.label}</span>
-            </button>
-          ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+          {reportTypes.map((type) => {
+            const selected = reportType === type.id;
+            return (
+              <button
+                key={type.id}
+                onClick={() => setReportType(type.id)}
+                style={{
+                  padding: '14px 16px',
+                  borderRadius: '10px',
+                  border: `2px solid ${selected ? '#10b981' : '#334155'}`,
+                  background: selected ? '#052e16' : '#0f172a',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  transition: 'all 0.2s',
+                }}
+              >
+                <type.icon style={{ width: '24px', height: '24px', color: '#10b981' }} />
+                <span style={{ fontSize: '0.875rem', fontWeight: '600', color: '#e5e7eb' }}>{type.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Reports List */}
         <Card title="Daftar Laporan Tersedia">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
               <thead>
-                <tr className="bg-[#0f172a]">
-                  <th className="px-3 py-2.5 text-left text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Judul Laporan</th>
-                  <th className="px-3 py-2.5 text-left text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Tipe</th>
-                  <th className="px-3 py-2.5 text-left text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Tanggal</th>
-                  <th className="px-3 py-2.5 text-center text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Dokumen</th>
-                  <th className="px-3 py-2.5 text-center text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Status</th>
-                  <th className="px-3 py-2.5 text-center text-[#60a5fa] font-semibold border-b-2 border-[#334155]">Aksi</th>
+                <tr style={{ background: '#0f172a' }}>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Judul Laporan</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Tipe</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'left', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Tanggal</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Dokumen</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Status</th>
+                  <th style={{ padding: '10px 12px', textAlign: 'center', color: '#60a5fa', fontWeight: '600', borderBottom: '2px solid #334155' }}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {mockReports.map((report) => (
-                  <tr key={report.id} className="border-b border-[#1e293b] hover:bg-[#0f172a40]">
-                    <td className="px-3 py-2.5 text-gray-300 font-medium">{report.title}</td>
-                    <td className="px-3 py-2.5 text-gray-300">
-                      <span className="px-2 py-1 bg-[#1e3a5f] text-[#60a5fa] rounded text-xs font-semibold capitalize">
+                  <tr key={report.id} style={{ borderBottom: '1px solid #1e293b' }}>
+                    <td style={{ padding: '10px 12px', color: '#d1d5db', fontWeight: '500' }}>{report.title}</td>
+                    <td style={{ padding: '10px 12px', color: '#d1d5db' }}>
+                      <span style={{ padding: '4px 8px', background: '#1e3a5f', color: '#60a5fa', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '600', textTransform: 'capitalize' }}>
                         {report.type}
                       </span>
                     </td>
-                    <td className="px-3 py-2.5 text-gray-400">{report.date}</td>
-                    <td className="px-3 py-2.5 text-gray-300 text-center">{report.documents}</td>
-                    <td className="px-3 py-2.5 text-center">
-                      <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                        report.status === 'Selesai' 
-                          ? 'bg-[#064e3b] text-[#10b981]' 
-                          : 'bg-[#451a03] text-[#f59e0b]'
-                      }`}>
+                    <td style={{ padding: '10px 12px', color: '#9ca3af' }}>{report.date}</td>
+                    <td style={{ padding: '10px 12px', color: '#d1d5db', textAlign: 'center' }}>{report.documents}</td>
+                    <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                      <span style={{
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        background: report.status === 'Selesai' ? '#064e3b' : '#451a03',
+                        color: report.status === 'Selesai' ? '#10b981' : '#f59e0b',
+                      }}>
                         {report.status}
                       </span>
                     </td>
-                    <td className="px-3 py-2.5 text-center">
-                      <div className="flex justify-center gap-2">
-                        <button 
+                    <td style={{ padding: '10px 12px', textAlign: 'center' }}>
+                      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                        <button
                           onClick={() => setSelectedReport(report.id === selectedReport ? null : report.id)}
-                          className="text-[#60a5fa] hover:text-[#3b82f6]"
+                          style={{ background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer', padding: '4px' }}
                           title="Preview"
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye style={{ width: '16px', height: '16px' }} />
                         </button>
-                        <button className="text-[#10b981] hover:text-[#059669]" title="Download">
-                          <Download className="w-4 h-4" />
+                        <button
+                          style={{ background: 'none', border: 'none', color: '#10b981', cursor: 'pointer', padding: '4px' }}
+                          title="Download"
+                        >
+                          <Download style={{ width: '16px', height: '16px' }} />
                         </button>
-                        <button onClick={handlePrint} className="text-[#f59e0b] hover:text-[#d97706]" title="Print">
-                          <Printer className="w-4 h-4" />
+                        <button
+                          onClick={handlePrint}
+                          style={{ background: 'none', border: 'none', color: '#f59e0b', cursor: 'pointer', padding: '4px' }}
+                          title="Print"
+                        >
+                          <Printer style={{ width: '16px', height: '16px' }} />
                         </button>
                       </div>
                     </td>
@@ -119,97 +140,99 @@ export default function ReportsPage() {
 
         {/* Report Preview */}
         {selectedReport && (
-          <Card title="Preview Laporan" className="mt-6">
-            <div className="bg-white text-gray-900 rounded-lg p-8 font-sans">
-              {/* Kop Surat */}
-              <div className="text-center mb-6 border-b-2 border-gray-800 pb-4">
-                <h2 className="text-lg font-bold uppercase m-0">PEMERINTAH KABUPATEN EXAMPLE</h2>
-                <h3 className="text-base font-bold uppercase m-0">KECAMATAN CONTOH</h3>
-                <h3 className="text-base font-bold uppercase m-0">DESA SUKAMAJU</h3>
-                <p className="text-xs text-gray-600 mt-2">Jl. Contoh No. 123, Kecamatan Contoh, Kabupaten Example</p>
-              </div>
-
-              {/* Judul Laporan */}
-              <div className="text-center mb-6">
-                <h2 className="text-base font-bold uppercase m-0">BERITA ACARA VERIFIKASI</h2>
-                <h3 className="text-sm text-gray-600 mt-1">Pertanggungjawaban Keuangan Desa Tahun Anggaran 2026</h3>
-              </div>
-
-              {/* Content */}
-              <div className="mb-6">
-                <p className="text-sm leading-relaxed mb-4">
-                  Yang bertanda tangan di bawah ini, Tim Verifikasi Keuangan Desa menerangkan bahwa setelah melakukan 
-                  pemeriksaan terhadap dokumen pertanggungjawaban keuangan desa dengan rincian sebagai berikut:
-                </p>
-
-                <table className="w-full border-collapse text-sm mb-4">
-                  <thead>
-                    <tr className="bg-gray-200">
-                      <th className="border border-gray-400 px-3 py-2 text-center font-bold">No</th>
-                      <th className="border border-gray-400 px-3 py-2 text-center font-bold">No. Dokumen</th>
-                      <th className="border border-gray-400 px-3 py-2 text-center font-bold">Judul</th>
-                      <th className="border border-gray-400 px-3 py-2 text-center font-bold">Jumlah</th>
-                      <th className="border border-gray-400 px-3 py-2 text-center font-bold">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-400 px-3 py-2 text-center">1</td>
-                      <td className="border border-gray-400 px-3 py-2 font-mono text-xs">PKG/001/2026</td>
-                      <td className="border border-gray-400 px-3 py-2">Pengadaan Alat Kantor</td>
-                      <td className="border border-gray-400 px-3 py-2 text-right">Rp 45.000.000</td>
-                      <td className="border border-gray-400 px-3 py-2 text-center text-green-700 font-bold">✓ Sesuai</td>
-                    </tr>
-                    <tr className="bg-gray-50">
-                      <td className="border border-gray-400 px-3 py-2 text-center">2</td>
-                      <td className="border border-gray-400 px-3 py-2 font-mono text-xs">PEM/002/2026</td>
-                      <td className="border border-gray-400 px-3 py-2">Pembelian Bahan Bangunan</td>
-                      <td className="border border-gray-400 px-3 py-2 text-right">Rp 78.000.000</td>
-                      <td className="border border-gray-400 px-3 py-2 text-center text-green-700 font-bold">✓ Sesuai</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-400 px-3 py-2 text-center">3</td>
-                      <td className="border border-gray-400 px-3 py-2 font-mono text-xs">PBG/003/2026</td>
-                      <td className="border border-gray-400 px-3 py-2">Pembangunan Jalan Desa</td>
-                      <td className="border border-gray-400 px-3 py-2 text-right">Rp 250.000.000</td>
-                      <td className="border border-gray-400 px-3 py-2 text-center text-yellow-700 font-bold">⚠ Perlu Klarifikasi</td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr className="bg-gray-200 font-bold">
-                      <td colSpan={3} className="border border-gray-400 px-3 py-2 text-right">Total</td>
-                      <td className="border border-gray-400 px-3 py-2 text-right">Rp 373.000.000</td>
-                      <td className="border border-gray-400 px-3 py-2"></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              {/* Tanda Tangan */}
-              <div className="grid grid-cols-2 gap-8 mt-8">
-                <div className="text-center">
-                  <p className="text-sm font-bold mb-1">Mengetahui,</p>
-                  <p className="text-sm font-bold mb-16">Kepala Desa</p>
-                  <p className="text-sm font-bold underline">AHMAD SUDIRMAN</p>
+          <div style={{ marginTop: '24px' }}>
+            <Card title="Preview Laporan">
+              <div style={{ background: '#ffffff', color: '#111827', borderRadius: '8px', padding: '32px', fontFamily: 'ui-sans-serif, system-ui, -apple-system, sans-serif' }}>
+                {/* Kop Surat */}
+                <div style={{ textAlign: 'center', marginBottom: '24px', borderBottom: '2px solid #1f2937', paddingBottom: '16px' }}>
+                  <h2 style={{ fontSize: '1.125rem', fontWeight: 'bold', textTransform: 'uppercase', margin: 0 }}>PEMERINTAH KABUPATEN EXAMPLE</h2>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 'bold', textTransform: 'uppercase', margin: 0 }}>KECAMATAN CONTOH</h3>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 'bold', textTransform: 'uppercase', margin: 0 }}>DESA SUKAMAJU</h3>
+                  <p style={{ fontSize: '0.75rem', color: '#4b5563', marginTop: '8px', marginBottom: 0 }}>Jl. Contoh No. 123, Kecamatan Contoh, Kabupaten Example</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-sm font-bold mb-1">Contoh, 15 Maret 2026</p>
-                  <p className="text-sm font-bold mb-16">Tim Verifikasi</p>
-                  <p className="text-sm font-bold underline">BUDI SANTOSO</p>
+
+                {/* Judul Laporan */}
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                  <h2 style={{ fontSize: '1.125rem', fontWeight: 'bold', textTransform: 'uppercase', margin: 0 }}>BERITA ACARA VERIFIKASI</h2>
+                  <h3 style={{ fontSize: '0.875rem', color: '#4b5563', marginTop: '4px', marginBottom: 0 }}>Pertanggungjawaban Keuangan Desa Tahun Anggaran 2026</h3>
+                </div>
+
+                {/* Content */}
+                <div style={{ marginBottom: '24px' }}>
+                  <p style={{ fontSize: '0.875rem', lineHeight: '1.6', marginBottom: '16px' }}>
+                    Yang bertanda tangan di bawah ini, Tim Verifikasi Keuangan Desa menerangkan bahwa setelah melakukan
+                    pemeriksaan terhadap dokumen pertanggungjawaban keuangan desa dengan rincian sebagai berikut:
+                  </p>
+
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem', marginBottom: '16px' }}>
+                    <thead>
+                      <tr style={{ background: '#e5e7eb' }}>
+                        <th style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', fontWeight: 'bold' }}>No</th>
+                        <th style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', fontWeight: 'bold' }}>No. Dokumen</th>
+                        <th style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', fontWeight: 'bold' }}>Judul</th>
+                        <th style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', fontWeight: 'bold' }}>Jumlah</th>
+                        <th style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', fontWeight: 'bold' }}>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center' }}>1</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', fontFamily: 'ui-monospace, monospace', fontSize: '0.75rem' }}>PKG/001/2026</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px' }}>Pengadaan Alat Kantor</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'right' }}>Rp 45.000.000</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', color: '#15803d', fontWeight: 'bold' }}>&#10003; Sesuai</td>
+                      </tr>
+                      <tr style={{ background: '#f9fafb' }}>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center' }}>2</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', fontFamily: 'ui-monospace, monospace', fontSize: '0.75rem' }}>PEM/002/2026</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px' }}>Pembelian Bahan Bangunan</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'right' }}>Rp 78.000.000</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', color: '#15803d', fontWeight: 'bold' }}>&#10003; Sesuai</td>
+                      </tr>
+                      <tr>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center' }}>3</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', fontFamily: 'ui-monospace, monospace', fontSize: '0.75rem' }}>PBG/003/2026</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px' }}>Pembangunan Jalan Desa</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'right' }}>Rp 250.000.000</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'center', color: '#a16207', fontWeight: 'bold' }}>&#9888; Perlu Klarifikasi</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr style={{ background: '#e5e7eb', fontWeight: 'bold' }}>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'right' }} colSpan={3}>Total</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px', textAlign: 'right' }}>Rp 373.000.000</td>
+                        <td style={{ border: '1px solid #9ca3af', padding: '8px 12px' }}></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                {/* Tanda Tangan */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginTop: '32px' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '4px' }}>Mengetahui,</p>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '64px' }}>Kepala Desa</p>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', textDecoration: 'underline' }}>AHMAD SUDIRMAN</p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '4px' }}>Contoh, 15 Maret 2026</p>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '64px' }}>Tim Verifikasi</p>
+                    <p style={{ fontSize: '0.875rem', fontWeight: 'bold', textDecoration: 'underline' }}>BUDI SANTOSO</p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex justify-end gap-3 mt-4">
-              <Button variant="outline" onClick={() => setSelectedReport(null)}>
-                Tutup
-              </Button>
-              <Button onClick={handlePrint}>
-                <Printer className="w-4 h-4 inline mr-2" />
-                Cetak Laporan
-              </Button>
-            </div>
-          </Card>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
+                <Button variant="outline" onClick={() => setSelectedReport(null)}>
+                  Tutup
+                </Button>
+                <Button onClick={handlePrint}>
+                  <Printer style={{ width: '16px', height: '16px', display: 'inline', marginRight: '8px' }} />
+                  Cetak Laporan
+                </Button>
+              </div>
+            </Card>
+          </div>
         )}
       </main>
     </div>
