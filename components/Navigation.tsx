@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', href: '/dashboard' },
+  { id: 'village', label: 'Profil Desa', href: '/village' },
   { id: 'documents', label: 'Dokumen', href: '/documents' },
   { id: 'verification', label: 'Verifikasi', href: '/verification' },
   { id: 'analysis', label: 'Analisis', href: '/analysis' },
