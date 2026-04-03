@@ -5,8 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -14,18 +14,11 @@ model User {
   email         String   @unique
   name          String
   password      String
-  role          Role     @default(VERIFIER)
+  role          String   @default("VERIFIER")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   documents     Document[] @relation("DocumentCreator")
   verifications Verification[] @relation("VerificationReviewer")
-}
-
-enum Role {
-  ADMIN
-  VERIFIER
-  AUDITOR
-  KEPALA_DESA
 }
 
 model Document {
@@ -33,12 +26,12 @@ model Document {
   documentNumber  String   @unique
   title           String
   description     String?
-  type            DocumentType
+  type            String
   amount          Float
   date            DateTime
-  status          DocumentStatus @default(PENDING)
+  status          String   @default("PENDING")
   riskScore       Float?
-  riskLevel       RiskLevel?
+  riskLevel       String?
   notes           String?
   filePath        String?
   createdBy       String
@@ -53,38 +46,13 @@ model Document {
   @@index([createdBy])
 }
 
-enum DocumentType {
-  PENGADAAN
-  PEMBELIAN
-  PEMBANGUNAN
-  PERBAIKAN
-  OPERASIONAL
-  HIBAH
-  BANTUAN_SOSIAL
-}
-
-enum DocumentStatus {
-  PENDING
-  IN_REVIEW
-  APPROVED
-  REJECTED
-  REVISE
-}
-
-enum RiskLevel {
-  LOW
-  MEDIUM
-  HIGH
-  CRITICAL
-}
-
 model Verification {
   id              String   @id @default(cuid())
   documentId      String
   document        Document @relation(fields: [documentId], references: [id])
   reviewerId      String
   reviewer        User     @relation("VerificationReviewer", fields: [reviewerId], references: [id])
-  status          VerificationStatus
+  status          String
   comments        String?
   findings        String?
   reviewedAt      DateTime @default(now())
@@ -92,12 +60,6 @@ model Verification {
 
   @@index([documentId])
   @@index([reviewerId])
-}
-
-enum VerificationStatus {
-  APPROVED
-  REJECTED
-  NEEDS_REVISION
 }
 
 model ChecklistItem {
